@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1 Year of Us ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1a1a1a;
+            color: #f0f0f0;
+            overflow-x: hidden;
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Floating hearts background */
+        .hearts-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            opacity: 0.3;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Main container */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Hero section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 1.5s ease-in forwards;
+            padding: 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            color: #ff8c61;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(255, 140, 97, 0.3);
+            letter-spacing: 2px;
+        }
+
+        .hero .subtitle {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            margin-bottom: 15px;
+            color: #ffb399;
+            font-weight: 300;
+        }
+
+        .hero .date {
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            margin-bottom: 50px;
+            color: #999;
+            letter-spacing: 3px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #ff8c61, #ff6b47);
+            color: white;
+            padding: 18px 45px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 140, 97, 0.4);
+            letter-spacing: 1px;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 140, 97, 0.6);
+        }
+
+        /* Story sections */
+        .story-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 80px 20px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .story-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .story-content {
+            max-width: 700px;
+            text-align: center;
+        }
+
+        .chapter-number {
+            font-size: 0.9rem;
+            color: #ff8c61;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .story-section h2 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            color: #ff8c61;
+            margin-bottom: 40px;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .story-section p {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            line-height: 2;
+            color: #e0e0e0;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            text-align: left;
+        }
+
+        .story-section .quote {
+            font-style: italic;
+            color: #ffb399;
+            font-size: clamp(1.2rem, 3vw, 1.6rem);
+            line-height: 1.8;
+            margin: 40px 0;
+            padding: 20px;
+            border-left: 3px solid #ff8c61;
+            background: rgba(255, 140, 97, 0.05);
+            text-align: left;
+        }
+
+        /* Discord screenshot section */
+        .discord-section {
+            background: rgba(255, 140, 97, 0.03);
+            border-radius: 20px;
+            padding: 40px 20px;
+            margin: 40px 0;
+        }
+
+        .discord-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(255, 140, 97, 0.3);
+        }
+
+        /* Photo gallery section */
+        .photo-gallery {
+            margin: 50px 0;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            color: white;
+            padding: 20px 15px 15px;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        /* Divider */
+        .divider {
+            text-align: center;
+            margin: 60px 0;
+        }
+
+        .divider-line {
+            display: inline-block;
+            width: 50px;
+            height: 2px;
+            background: #ff8c61;
+            margin: 0 10px;
+            vertical-align: middle;
+        }
+
+        .divider-heart {
+            font-size: 1.5rem;
+            vertical-align: middle;
+        }
+
+        /* Continue button */
+        .continue-btn {
+            margin-top: 50px;
+            background: linear-gradient(135deg, #ff8c61, #ff6b47);
+            padding: 15px 40px;
+            font-size: 1.1rem;
+        }
+
+        /* Special moments grid */
+        .moments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .moment-card {
+            background: rgba(255, 140, 97, 0.05);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 140, 97, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .moment-card:active {
+            transform: scale(0.98);
+        }
+
+        .moment-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 140, 97, 0.3);
+            box-shadow: 0 10px 30px rgba(255, 140, 97, 0.2);
+        }
+
+        .moment-card h3 {
+            color: #ff8c61;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        .moment-card p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #ccc;
+        }
+
+        /* Mannat section */
+        .mannat-section {
+            background: linear-gradient(135deg, rgba(255, 140, 97, 0.1), rgba(255, 107, 71, 0.05));
+            border-radius: 20px;
+            padding: 80px 40px;
+            text-align: center;
+            border: 2px solid rgba(255, 140, 97, 0.2);
+        }
+
+        .mannat-btn {
+            margin-top: 40px;
+            background: linear-gradient(135deg, #ff8c61, #ff6b47);
+            padding: 20px 60px;
+            font-size: 1.3rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 5px 15px rgba(255, 140, 97, 0.4);
+            }
+            50% {
+                box-shadow: 0 5px 30px rgba(255, 140, 97, 0.6);
+            }
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #2a2a2a, #1f1f1f);
+            padding: 50px 30px;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 10px 50px rgba(255, 140, 97, 0.4);
+            animation: slideUp 0.4s ease;
+            border: 2px solid rgba(255, 140, 97, 0.3);
+        }
+
+        .modal-content h3 {
+            color: #ff8c61;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .modal-content p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+
+        .close-btn {
+            background: #ff8c61;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: #ff6b47;
+            transform: scale(1.05);
+        }
+
+        .close-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 60px 20px;
+            color: #888;
+            font-size: 1rem;
+        }
+
+        footer p {
+            margin: 10px 0;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .story-section {
+                padding: 60px 15px;
+                min-height: auto;
+            }
+            .modal-content {
+                padding: 40px 25px;
+            }
+            .moments-grid {
+                grid-template-columns: 1fr;
+            }
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            .gallery-item img {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating hearts background -->
+    <div class="hearts-bg" id="heartsContainer"></div>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>1 Year of Us</h1>
+        <p class="subtitle">Our Story</p>
+        <p class="date">One Year • Infinite Memories</p>
+        <button class="btn" onclick="scrollToStory()">Open Our Story</button>
+    </div>
+
+    <div class="container">
+        <!-- Opening Letter -->
+        <div class="story-section" id="intro">
+            <div class="story-content">
+                <div class="chapter-number">Chapter 1</div>
+                <h2>They Said We Wouldn't Last</h2>
+                <p>Evuuuuu myyy cutuuuu ITS an Yearrrrr OMGGGGGG we have been together in this LDR officially for an yearr, when so manyyy fuckinggg idiotttttssss told me it wont lasttt even a month its just a 2-3 month, "bangalore jaake toh nhi chalega" blah blahhhh THEY WERE ALL FUCKING WRONGGG EVUUUU THEY WERE WRONGGGG…i love you soo sooo muchhhhhhh… my cutu idiotttt how can you even think i forgot something so special huh 😭</p>
+                <button class="btn continue-btn" onclick="scrollToNext('the-start')">How It All Started →</button>
+            </div>
+        </div>
+
+        <div class="divider">
+            <span class="divider-line"></span>
+            <span class="divider-heart">❤️</span>
+            <span class="divider-line"></span>
+        </div>
+
+        <!-- The Start -->
+        <div class="story-section" id="the-start">
+            <div class="story-content">
+                <div class="chapter-number">Chapter 2</div>
+                <h2>THE START</h2>
+                <p>Evuuu its soo funny how things started, how many times we were just about to block each other, and i literally just blocked u and was about to end the chat but idkkkkkk i was like "ek baar dekh leta hun kya text kiya hai kya hi ho jayega".. 🥹</p>
+                
+                <div class="discord-section">
+                    <!-- 🔴 REPLACE THIS URL WITH YOUR DISCORD SCREENSHOT 🔴 -->
+                    <img src= https://photos.fife.usercontent.google.com/pw/AP1GczOzy_zErNYrFylkCsGzs4IVKOEM6_4RiQ2si1Un2gE5X7NndGpKQ0v7=w1280-h302-s-no-gm?authuser=4 alt="Discord Screenshot" class="discord-img">
+                </div>
+                
+                <div class="quote">Somehow, that became the first sentence of our story.
+Not perfect. Not planned.
+A moment I'll never forget"</div>
+                
+                <p style="text-align: center; color: #999; font-style: italic; margin-top: 40px;">And then... we decided to meet.</p>
+                <button class="btn continue-btn" onclick="scrollToNext('akshardham')">The First Meeting →</button>
+            </div>
+        </div>
+
+        <div class="divider">
+            <span class="divider-line"></span>
+            <span class="divider-heart">🧡</span>
+            <span class="divider-line"></span>
+        </div>
+
+        <!-- Akshardham -->
+        <div class="story-section" id="akshardham">
+            <div class="story-content">
+                <div class="chapter-number">Chapter 3</div>
+                <h2>Akshardham Metro Station</h2>
+                <p style="text-align: center; color: #ffb399; font-size: 1.2rem; margin-bottom: 40px;">The moment everything became real.</p>
+                
+                <p>Akshardham Metro Station.
+You were standing near the ticket counter. I was on the upper floor.
+For days, I was nervous. Overthinking. Almost sick.
+But the moment I saw you— all of it stopped.
+It felt like a weird kind of relief. Like: "She's real. She's here. She's mine."
+I don't think I'll ever forget that scene never. It stills makes me feel something imagining that moment.</p>
+
+                <div class="quote">In that moment, you stopped being a text on my screen.
+You became my reality.</div>
+
+                <button class="btn continue-btn" onclick="scrollToNext('the-day')">A Day I'll Never Forget →</button>
+            </div>
+        </div>
+
+        <div class="divider">
+            <span class="divider-line"></span>
+            <span class="divider-heart">💛</span>
+            <span class="divider-line"></span>
+        </div>
+
+        <!-- The Day You Cried -->
+        <div class="story-section" id="the-day">
+            <div class="story-content">
+                <div class="chapter-number">Chapter 4</div>
+                <h2>The Day You Cried</h2>
+                <p style="text-align: center; color: #ffb399; font-size: 1.2rem; margin-bottom: 40px;">The day I realized what we really had.</p>
+                
+                <p>The day after my placement, when I called and said,
+"Evu, my parents are finally happy... I'm happy."
+And you started crying.
+You cried…not because you were sad… but because I was happy.
+That day, something clicked.
+You didn't just hear me. You felt me.
+That moment made me feel understood. Close. Seen.</p>
+
+                <div class="quote">You didn't celebrate my success.
+You celebrated my happiness.
+That's when I knew—
+This is different. This is real.</div>
+
+                <button class="btn continue-btn" onclick="scrollToNext('our-photos')">See Our Journey →</button>
+            </div>
+        </div>
+
+        <div class="divider">
+            <span class="divider-line"></span>
+            <span class="divider-heart">❤️</span>
+            <span class="divider-line"></span>
+        </div>
+
+        <!-- Photo Gallery Section -->
+        <div class="story-section" id="our-photos">
+            <div class="story-content">
+                <div class="chapter-number">Our Moments</div>
+                <h2>Us</h2>
+                <p style="text-align: center; color: #ffb399; margin-bottom: 20px;">Every picture tells a story</p>
+                
+                <div class="photo-gallery">
+                    <div class="gallery-grid">
+                        <!-- 🔴 PHOTO 1 - PASTE YOUR FIRST PHOTO URL BELOW 🔴 -->
+                        <div class="gallery-item">
+                            <img src="PASTE_PHOTO_1_URL_HERE" alt="Us">
+                            <div class="gallery-caption">Our first moment together</div>
+                        </div>
+                        
+                        <!-- 🔴 PHOTO 2 - PASTE YOUR SECOND PHOTO URL BELOW 🔴 -->
+                        <div class="gallery-item">
+                            <img src="PASTE_PHOTO_2_URL_HERE" alt="Us">
+                            <div class="gallery-caption">Making memories</div>
+                        </div>
+                        
+                        <!-- 🔴 PHOTO 3 - PASTE YOUR THIRD PHOTO URL BELOW 🔴 -->
+                        <div class="gallery-item">
+                            <img src="PASTE_PHOTO_3_URL_HERE" alt="Us">
+                            <div class="gallery-caption">Just us being us</div>
+                        </div>
+                        
+                        <!-- 🔴 PHOTO 4 - PASTE YOUR FOURTH PHOTO URL BELOW 🔴 -->
+                        <div class="gallery-item">
+                            <img src="PASTE_PHOTO_4_URL_HERE" alt="Us">
+                            <div class="gallery-caption">One of many smiles</div>
+                        </div>
+                        
+                        <!-- 🔴 PHOTO 5 - PASTE YOUR FIFTH PHOTO URL BELOW 🔴 -->
+                        <div class="gallery-item">
+                            <img src="PASTE_PHOTO_5_URL_HERE" alt="Us">
+                            <div class="gallery-caption">Forever grateful for you</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn continue-btn" onclick="scrollToNext('memories')">Our Timeline →</button>
+            </div>
+        </div>
+
+        <div class="divider">
+            <span class="divider-line"></span>
+            <span class="divider-heart">🧡</span>
+            <span class="divider-line"></span>
+        </div>
+
+        <!-- Memories Timeline -->
+        <div class="story-section" id="memories">
+            <div class="story-content">
+                <div class="chapter-number">Chapter 5</div>
+                <h2>A Year of Everything</h2>
+                
+                <div class="moments-grid">
+                    <div class="moment-card">
+                        <h3>🌙 First Voice Call</h3>
+                        <p>Those butterflies that never went away</p>
+                    </div>
+                    <div class="moment-card">
+                        <h3>🏛️ Akshardham Scan</h3>
+                        <p>The day pixels became reality</p>
+                    </div>
+                    <div class="moment-card">
+                        <h3>💼 My First Job</h3>
+                        <p>You cried because I smiled</p>
+                    </div>
+                    <div class="moment-card">
+                        <h3>🌃 Terrace Nights</h3>
+                        <p>Late night talks under the stars</p>
+                    </div>
+                    <div class="moment-card">
+                        <h3>💪 Your Courage</h3>
+                        <p>Finally telling your parents everything</p>
+                    </div>
+                    <div class="moment-card">
+                        <h3>🎯 New Beginnings</h3>
+                        <p>Leaving the past, building our future</p>
+                    </div>
+                </div>
+
+                <p style="margin-top: 50px;">From a typo to terrace nights, from first-voice butterflies to that Akshardham scan, from me getting my first job to you crying on a video call because I was happy A lot of memories we have and will always remember.
+Evu our story is different unique and special. Someday when things wont work out someday when we need to separate someday when nothing can be done, we will figure out something but everything will be fine.</p>
+
+                <button class="btn continue-btn" onclick="scrollToNext('mannat')">Our Promise →</button>
+            </div>
+        </div>
+
+        <div class="divider">
+            <span class="divider-line"></span>
+            <span class="divider-heart">💛</span>
+            <span class="divider-line"></span>
+        </div>
+
+        <!-- Mannat Section -->
+        <div class="story-section" id="mannat">
+            <div class="story-content">
+                <div class="chapter-number">Chapter 6</div>
+                <h2>Our Mannat</h2>
+                
+                <div class="mannat-section">
+                    <p>Ok, so… a lot of things written, a lot of things you just read. I hope I made you tear up a little and if not, I hope I at least made you smile.
+I always want us to make memories we can look back on and smile about later. I want us to be successful at something together.
+So today, on our 1 year of so many thingss, let's to take a mannat. Let's pick one thing we'll work on we will work to achieve on.. something real. And until we achieve it, we'll give up one maybe important thing we both agree on (a little reminder for the promise). Lets leave everything on god, i came into ur life or u came into my life with some purpose, u were finally able to tell ur parents about everything that that guy did, u finally stopped with the discord stuff, u finally stopped talking to randos on insta after us…for me i got a job, i had my first relationship and my first time for everything…lets make it more special by doing something or by achieving something evu..yea that's it I love you evu i am always there for youu always. Also I was laughing when your texts went dry after I wrote, "Evu aaj jaldi sona hai" hehe.
+I love youuu.</p>
+                    <button class="btn mannat-btn" onclick="openModal()">✨ Accept Our Mannat ✨</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p style="font-size: 1.5rem; color: #ff8c61; margin-bottom: 20px;">❤️</p>
+        <p style="font-size: 1.2rem; color: #ccc;">Here's to forever, Evu</p>
+        <p style="margin-top: 20px;">One year down, a lifetime to go</p>
+    </footer>
+
+    <!-- Modal -->
+    <div class="modal" id="mannatModal">
+        <div class="modal-content">
+            <h3>✨ Our Mannat ✨</h3>
+            <p>Thank you for accepting our promise, Evu. Now text me what you've chosen, and together we'll make it happen. This is our journey, our goal, our story to write.</p>
+            <button class="close-btn" onclick="closeModal()">I Promise ❤️</button>
+        </div>
+    </div>
+
+    <script>
+        // Create floating hearts
+        function createHearts() {
+            const container = document.getElementById('heartsContainer');
+            const heartSymbols = ['❤️', '🧡', '💛'];
+            
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 15 + 's';
+                heart.style.animationDuration = (15 + Math.random() * 10) + 's';
+                container.appendChild(heart);
+            }
+        }
+
+        // Smooth scroll to story
+        function scrollToStory() {
+            document.getElementById('intro').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Scroll to next section
+        function scrollToNext(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Intersection Observer for fade-in animations
+        const sections = document.querySelectorAll('.story-section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.2 });
+
+        sections.forEach(section => observer.observe(section));
+
+        // Modal functions
+        function openModal() {
+            document.getElementById('mannatModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('mannatModal').classList.remove('active');
+        }
+
+        // Close modal on outside click
+        document.getElementById('mannatModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Initialize
+        createHearts();
+    </script>
+</body>
+</html>
